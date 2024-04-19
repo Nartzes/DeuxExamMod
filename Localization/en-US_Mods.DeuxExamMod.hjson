@@ -1,0 +1,17 @@
+# This file will automatically update with entries for new content after a build and reload
+
+Items: {
+	FratPad: {
+		DisplayName: Frat Pad
+		Tooltip: "Phi Theta Kappa! The power the elites flow through the paddle."
+	}
+	FeelGoodJuice: {
+		DisplayName: Feel Good Juice
+		Tooltip: "Just something to take the edge off after the final exam."
+	}
+	BookMark: {
+		DisplayName: Book Mark
+		Tooltip: "The book won't be the only thing this thing will make."
+	}
+
+}
