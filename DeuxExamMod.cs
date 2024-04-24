@@ -1,6 +1,6 @@
 using Terraria.ModLoader;
 
-namespace DeuxExamMod
+namespace DeuxExamModv1
 {
 	public class DeuxExamMod : Mod
 	{

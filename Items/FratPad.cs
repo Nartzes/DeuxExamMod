@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DeuxExamMod.Items
+namespace DeuxExamModv1.Items
 {
 	public class FratPad : ModItem
 	{
