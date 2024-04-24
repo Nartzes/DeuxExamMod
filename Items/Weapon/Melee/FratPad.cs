@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DeuxExamMod.Items
+namespace DeuxExamMod.Items.Weapon.Melee
 {
 	public class FratPad : ModItem
 	{

@@ -1,16 +1,17 @@
-﻿using Terraria;
+﻿using Humanizer;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DeuxExamMod.Items
+namespace DeuxExamMod.Items.Consumeable
 {
-    public class FeelGoodJuice : ModItem
+    public class FeelGoodJuice : ModItem // Consumeable ID Value starts with 10060
     {
         public override void SetDefaults()
         {
             Item.potion = true;
             Item.maxStack = 99;
-            Item.value = 10020;
+            Item.value = 10010;
             Item.rare = 2;
             Item.useAnimation = 30;
             Item.useTime = 30;
