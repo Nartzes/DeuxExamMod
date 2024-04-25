@@ -6,8 +6,14 @@ namespace DeuxExamMod.Items.Weapon.Melee
 {
 	public class FratPad : ModItem
 	{
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Frat Pad");
+            Tooltip.SetDefault("Phi Theta Kappa! The power of fraternities flows through the paddle.");
+        }
 
-		public override void SetDefaults()
+
+        public override void SetDefaults()
 		{
 			Item.damage = 100;
 			Item.DamageType = DamageClass.Melee;
@@ -19,8 +25,8 @@ namespace DeuxExamMod.Items.Weapon.Melee
 			Item.useStyle = 1;
 			Item.knockBack = 8;
 			Item.value = 10000;
-			Item.rare = 2;
-			Item.UseSound = SoundID.Item1;
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
 		}
 	}

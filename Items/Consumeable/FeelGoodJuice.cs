@@ -7,12 +7,18 @@ namespace DeuxExamMod.Items.Consumeable
 {
     public class FeelGoodJuice : ModItem // Consumeable ID Value starts with 10060
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Feel Good Juice");
+            Tooltip.SetDefault("Something to take the edge off.");
+        }
+
         public override void SetDefaults()
         {
             Item.potion = true;
             Item.maxStack = 99;
             Item.value = 10010;
-            Item.rare = 2;
+            Item.rare = ItemRarityID.Blue;
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.useStyle = 9;

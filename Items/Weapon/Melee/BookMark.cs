@@ -8,20 +8,26 @@ namespace DeuxExamMod.Items.Weapon.Melee
 {
     public class BookMark : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Book Mark");
+            Tooltip.SetDefault("Send the razor sharp edges into their eyes.");
+        }
+
         public override void SetDefaults()
         {
             Item.DamageType = DamageClass.MeleeNoSpeed;
-            Item.damage = 75;
+            Item.damage = 95;
             Item.crit = 1;
             Item.width = 20;
             Item.height = 20;
-            Item.useTime = 45;
+            Item.useTime = 50;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.useAnimation = 45;
+            Item.useAnimation = 50;
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.knockBack = 3;
-            Item.rare = 6;
+            Item.rare = ItemRarityID.Purple;
             Item.shoot = Mod.Find<ModProjectile>("BookProj").Type;
             Item.shootSpeed = 12f;
             Item.UseSound = SoundID.Item1;
