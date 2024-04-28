@@ -1,3 +1,4 @@
+using DeuxExamMod.Items.Misc;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -17,9 +18,18 @@ namespace DeuxExamMod.Items.Misc
         {
             Item.width = 16;
             Item.height = 28;
-            Item.maxStack = 999;
-            Item.value = Item.sellPrice(copper: 20);
-            Item.rare = ItemRarityID.Green;
+            Item.maxStack = 1;
+            Item.rare = ItemRarityID.Blue;
         }
+
+        public override void AddRecipes()
+        {
+            Recipe recipeModded = CreateRecipe();
+            recipeModded.AddIngredient<CollegeNote>(8);
+            recipeModded.AddTile(18);
+            recipeModded.Register();
+        }
+
+
     }
 }

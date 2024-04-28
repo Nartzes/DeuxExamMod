@@ -18,7 +18,6 @@ namespace DeuxExamMod.Items.Misc
             Item.width = 16;
             Item.height = 28;
             Item.maxStack = 1;
-            Item.value = Item.sellPrice(Silver: 1, Copper: 60);
             Item.rare = ItemRarityID.Blue;
         }
     }

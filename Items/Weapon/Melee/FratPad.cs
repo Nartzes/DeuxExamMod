@@ -24,7 +24,6 @@ namespace DeuxExamMod.Items.Weapon.Melee
 			Item.useAnimation = 20;
 			Item.useStyle = 1;
 			Item.knockBack = 8;
-			Item.value = 10000;
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
