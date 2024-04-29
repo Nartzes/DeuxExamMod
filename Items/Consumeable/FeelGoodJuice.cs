@@ -17,7 +17,6 @@ namespace DeuxExamMod.Items.Consumeable
         {
             Item.potion = true;
             Item.maxStack = 99;
-            Item.value = 10010;
             Item.rare = ItemRarityID.Blue;
             Item.useAnimation = 30;
             Item.useTime = 30;
