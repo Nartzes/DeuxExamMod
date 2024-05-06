@@ -12,7 +12,7 @@ namespace DeuxExamMod.Items.Consumeable
             DisplayName.SetDefault("Feel Good Juice");
             Tooltip.SetDefault("Something to take the edge off.");
         }
-
+            
         public override void SetDefaults()
         {
             Item.potion = true;
