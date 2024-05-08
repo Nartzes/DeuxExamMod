@@ -1,4 +1,4 @@
-using DeuxExamMod.Projectile;
+using DeuxExamMod.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -20,7 +20,7 @@ namespace DeuxExamMod.Items.Weapon.Magic
         public override void SetDefaults()
         {
             Item.DamageType = DamageClass.Magic;
-            Item.damage = 15;
+            Item.damage = 100;
             Item.mana = 2;
             Item.crit = 6;
             Item.width = 20;
@@ -30,7 +30,7 @@ namespace DeuxExamMod.Items.Weapon.Magic
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 2;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = ItemRarityID.Blue;
             Item.shoot = Mod.Find<ModProjectile>("DaPongProj").Type;
             Item.shootSpeed = 12;
             Item.UseSound = SoundID.Item9;

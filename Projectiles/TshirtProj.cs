@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
 
-namespace DeuxExamMod.Projectile
+namespace DeuxExamMod.Projectiles
 {
     public class TshirtProj : ModProjectile
     {
@@ -29,7 +29,7 @@ namespace DeuxExamMod.Projectile
 
         public override void AI()
         {
-            int dust2 = Dust.NewDust(Projectile.Center, 1, 1, 139, 0f, 0f, 0, default(Color), 1f);
+            int dust2 = Dust.NewDust(Projectile.Center, 1, 1, 21, 0f, 0f, 0, default(Color), 1f);
             Main.dust[dust2].velocity *= 3f;
             Main.dust[dust2].scale = (float)Main.rand.Next(80, 115) * 0.013f;
             Main.dust[dust2].noGravity = true;

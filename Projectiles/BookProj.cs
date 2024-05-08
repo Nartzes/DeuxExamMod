@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
 
-namespace DeuxExamMod.Projectile
+namespace DeuxExamMod.Projectiles
 {
 	public class BookProj : ModProjectile
 	{

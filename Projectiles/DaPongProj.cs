@@ -5,13 +5,14 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
 
-namespace DeuxExamMod.Projectile
+namespace DeuxExamMod.Projectiles
 {
 	public class DaPongProj : ModProjectile
 	{
 
 		public override void SetDefaults()
 		{
+			//Projectile.
 			Projectile.width = 10;
 			Projectile.height = 10;
 			Projectile.aiStyle = 24;

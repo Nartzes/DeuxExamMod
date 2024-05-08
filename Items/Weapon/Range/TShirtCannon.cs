@@ -15,7 +15,7 @@ namespace DeuxExamMod.Items.Weapon.Range
 
         public override void SetDefaults()
         {
-            Item.damage = 150;
+            Item.damage = 280;
             Item.DamageType = DamageClass.Ranged;
             Item.crit = 6;
             Item.width = 80;
@@ -24,7 +24,7 @@ namespace DeuxExamMod.Items.Weapon.Range
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 7.5f;
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.Blue;
             Item.shoot = Mod.Find<ModProjectile>("TshirtProj").Type;
             Item.UseSound = SoundID.Item61;
             Item.autoReuse = true;
