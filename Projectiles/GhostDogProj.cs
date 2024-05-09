@@ -1,3 +1,4 @@
+using DeuxExamMod.Buff;
 using Terraria;
 using System;
 using Terraria.ID;
@@ -42,7 +43,7 @@ namespace DeuxExamMod.Projectiles
             }
         }
 
-            public void AIGeneral(Player owner, out Vector2 vectorToIdlePosition, out float distanceToIdlePosition)
+        public void AIGeneral(Player owner, out Vector2 vectorToIdlePosition, out float distanceToIdlePosition)
         {
             Vector2 idlePosition = owner.Center;
             idlePosition.Y -= 48f;
@@ -88,7 +89,7 @@ namespace DeuxExamMod.Projectiles
             //        {
             //            Projectile.velocity.Y += overlapVelocity;
             //        }
-                //}
+            //}
         }
 
         private void AIMovement(bool foundTarget, float distanceFromTarget, Vector2 targetCenter, float distanceToIdlePosition, Vector2 vectorToIdlePosition)
@@ -153,3 +154,4 @@ namespace DeuxExamMod.Projectiles
         }
     }
 }
+

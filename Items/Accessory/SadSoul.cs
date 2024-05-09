@@ -1,3 +1,5 @@
+using DeuxExamMod.Projectiles;
+using DeuxExamMod.Buff;
 using Terraria;
 using System;
 using Terraria.ID;
@@ -12,15 +14,24 @@ namespace DeuxExamMod.Items.Accessory
         {
             DisplayName.SetDefault("Sad Soul");
             Tooltip.SetDefault("It didn't want to go, but it was taken too soon.");
+            Item.buffType = Mod.Find<ModBuff>("GhostDogBuff").Type; // Apply buff upon usage of the Item.
+            Item.shoot = Mod.Find<ModProjectile>("GhostDogProj").Type; // "Shoot" your pet projectile.
+
         }
 
 
         public override void SetDefaults()
         {
-            Item.CloneDefaults(ItemID.ZephyrFish); // Copy the Defaults of the Zephyr Fish Item.
-
-            Item.shoot = ModContent.ProjectileType<GhostDogProj>(); // "Shoot" your pet projectile.
-            Item.buffType = ModContent.BuffType<GhostDogBuff>(); // Apply buff upon usage of the Item.
+            Item.damage = 0;
+            Item.accessory = true;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useAnimation = 20;
+            Item.useTime = 20;
+            Item.noMelee = true;
+            Item.width = 30;
+            Item.height = 30;
+            Item.value = Item.sellPrice(platinum: 1);
+            Item.rare = ItemRarityID.Pink;
         }
 
         public override bool? UseItem(Player player)

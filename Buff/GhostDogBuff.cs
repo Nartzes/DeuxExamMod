@@ -19,7 +19,7 @@ namespace DeuxExamMod.Buff
         public override void Update(Player player, ref int buffIndex)
         { // This method gets called every frame your buff is active on your player.
             bool unused = false;
-            player.BuffHandle_SpawnPetIfNeededAndSetTime(buffIndex, ref unused, ModContent.ProjectileType<GhostDogProj>());
+            player.BuffHandle_SpawnPetIfNeededAndSetTime(buffIndex, ref unused, Mod.Find<ModProjectile>("GhostDogProj").Type);
         }
     }
 }
