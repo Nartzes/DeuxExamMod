@@ -14,8 +14,6 @@ namespace DeuxExamMod.Items.Accessory
         {
             DisplayName.SetDefault("Sad Soul");
             Tooltip.SetDefault("It didn't want to go, but it was taken too soon.");
-            Item.buffType = Mod.Find<ModBuff>("GhostDogBuff").Type; // Apply buff upon usage of the Item.
-            Item.shoot = Mod.Find<ModProjectile>("GhostDogProj").Type; // "Shoot" your pet projectile.
 
         }
 
@@ -32,6 +30,9 @@ namespace DeuxExamMod.Items.Accessory
             Item.height = 30;
             Item.value = Item.sellPrice(platinum: 1);
             Item.rare = ItemRarityID.Pink;
+            Item.buffType = Mod.Find<ModBuff>("GhostDogBuff").Type; // Apply buff upon usage of the Item.
+            Item.shoot = Mod.Find<ModProjectile>("GhostDogProj").Type; // "Shoot" your pet projectile.
+
         }
 
         public override bool? UseItem(Player player)

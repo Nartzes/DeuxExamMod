@@ -11,14 +11,14 @@ namespace DeuxExamMod.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Projectile.type] = 13;
+            Main.projFrames[Projectile.type] = 8; // This adjust how much of the verticalness the frames are and it is the main reason why you see more than one fram at once.
             Main.projPet[Projectile.type] = true;
         }
 
         public override void SetDefaults()
         {
-            Projectile.CloneDefaults(ProjectileID.ZephyrFish); // Copy the stats of the Zephyr Fish
-            AIType = ProjectileID.ZephyrFish; // Mimic as the Zephyr Fish during AI.
+            Projectile.CloneDefaults(ProjectileID.Puppy); // Copy the stats of the Zephyr Fish
+            AIType = ProjectileID.Puppy; // Mimic as the Zephyr Fish during AI.
 
         }
 
@@ -27,7 +27,7 @@ namespace DeuxExamMod.Projectiles
         {
             Player player = Main.player[Projectile.owner];
 
-            player.zephyrfish = false; // Relic from AIType
+            player.puppy = false; // Relic from AIType
 
             return true;
         }
