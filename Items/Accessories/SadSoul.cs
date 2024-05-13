@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
-namespace DeuxExamMod.Items.Accessory
+namespace DeuxExamMod.Items.Accessories
 {
     public class SadSoul : ModItem
     {
