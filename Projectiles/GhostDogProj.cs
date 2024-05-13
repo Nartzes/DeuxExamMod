@@ -11,15 +11,22 @@ namespace DeuxExamMod.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Projectile.type] = 8; // This adjust how much of the verticalness the frames are and it is the main reason why you see more than one fram at once.
+            Main.projFrames[Projectile.type] = 1; // This adjust how much of the verticalness the frames are and it is the main reason why you see more than one fram at once.
             Main.projPet[Projectile.type] = true;
+
         }
 
         public override void SetDefaults()
         {
-            Projectile.CloneDefaults(ProjectileID.Puppy); // Copy the stats of the Zephyr Fish
-            AIType = ProjectileID.Puppy; // Mimic as the Zephyr Fish during AI.
-
+            Projectile.CloneDefaults(ProjectileID.GlitteryButterfly);
+            AIType = ProjectileID.GlitteryButterfly;
+            Projectile.netImportant = true;
+            Projectile.width = 32;
+            Projectile.height = 64;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft *= 5;
+            Projectile.tileCollide = true;
         }
 
 
@@ -27,7 +34,7 @@ namespace DeuxExamMod.Projectiles
         {
             Player player = Main.player[Projectile.owner];
 
-            player.puppy = false; // Relic from AIType
+            player.zephyrfish = false;
 
             return true;
         }
@@ -41,55 +48,6 @@ namespace DeuxExamMod.Projectiles
             {
                 Projectile.timeLeft = 2;
             }
-        }
-
-        public void AIGeneral(Player owner, out Vector2 vectorToIdlePosition, out float distanceToIdlePosition)
-        {
-            Vector2 idlePosition = owner.Center;
-            idlePosition.Y -= 48f;
-
-            float minionPositionOffset = (10 + Projectile.minionPos * 40) * -owner.direction;
-            idlePosition.X += minionPositionOffset;
-
-            vectorToIdlePosition = idlePosition - Projectile.Center;
-            distanceToIdlePosition = vectorToIdlePosition.Length();
-
-            if (Main.myPlayer == owner.whoAmI && distanceToIdlePosition > 2000f)
-            {
-                Projectile.position = idlePosition;
-                Projectile.velocity *= 0.1f;
-                Projectile.netUpdate = true;
-            }
-
-            float overlapVelocity = 0.04f;
-
-            //for (int i = 0; i < Main.maxProjectiles; i++)
-            //{
-            //    //Projectile other = Main.Projectile[i];
-            //    //if (
-            //    //    i != Projectile.whoAmI &&
-            //    //    other.owner == Projectile.owner &&
-            //    //    Math.Abs(Projectile.position.X - other.position.X) + Math.Abs(Projectile.position.Y - other.position.Y) < Projectile.width
-            //    //)
-            //    //{
-            //        if (Projectile.position.X < other.position.X)
-            //        {
-            //            Projectile.velocity.X -= overlapVelocity;
-            //        }
-            //        else
-            //        {
-            //            Projectile.velocity.X += overlapVelocity;
-            //        }
-
-            //        if (Projectile.position.Y < other.position.Y)
-            //        {
-            //            Projectile.velocity.Y -= overlapVelocity;
-            //        }
-            //        else
-            //        {
-            //            Projectile.velocity.Y += overlapVelocity;
-            //        }
-            //}
         }
 
         private void AIMovement(bool foundTarget, float distanceFromTarget, Vector2 targetCenter, float distanceToIdlePosition, Vector2 vectorToIdlePosition)

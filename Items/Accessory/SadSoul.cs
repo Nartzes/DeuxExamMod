@@ -10,6 +10,8 @@ namespace DeuxExamMod.Items.Accessory
 {
     public class SadSoul : ModItem
     {
+        public new string LocalizationCategory => "Items.Pets";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sad Soul");
@@ -20,18 +22,9 @@ namespace DeuxExamMod.Items.Accessory
 
         public override void SetDefaults()
         {
-            Item.damage = 0;
-            Item.accessory = true;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.useAnimation = 20;
-            Item.useTime = 20;
-            Item.noMelee = true;
-            Item.width = 30;
-            Item.height = 30;
-            Item.value = Item.sellPrice(platinum: 1);
-            Item.rare = ItemRarityID.Pink;
-            Item.buffType = Mod.Find<ModBuff>("GhostDogBuff").Type; // Apply buff upon usage of the Item.
-            Item.shoot = Mod.Find<ModProjectile>("GhostDogProj").Type; // "Shoot" your pet projectile.
+            Item.CloneDefaults(ItemID.ZephyrFish);
+            Item.buffType = Mod.Find<ModBuff>("GhostDogBuff").Type;
+            Item.shoot = Mod.Find<ModProjectile>("GhostDogProj").Type;
 
         }
 
