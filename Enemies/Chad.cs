@@ -51,7 +51,6 @@ namespace DeuxExamMod.Enemies
             }
             jumpCooldown--; // Decrease cooldown
         }
-
         public override void OnKill()
         {
             // Manually spawn FeelGoodJuice
@@ -65,8 +64,6 @@ namespace DeuxExamMod.Enemies
             {
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), item2Type, item2Amount);
             }
-            //            npcLoot.Add(ModContent.ItemType<SulphuricScale>(), 2, 1, 3);
-
         }
     }
 }

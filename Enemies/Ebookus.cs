@@ -6,12 +6,12 @@ using Terraria.GameContent.ItemDropRules;
 
 namespace DeuxExamMod.Enemies
 {
-    public class Eboookis : ModNPC
+    public class Ebookus : ModNPC
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eboookis");
-            Main.npcFrameCount[NPC.type] = 5; // Assuming 8 frames for the NPC's animation
+            DisplayName.SetDefault("Ebookus");
+            Main.npcFrameCount[NPC.type] = 24; // Assuming 8 frames for the NPC's animation
         }
 
         public override void SetDefaults()
