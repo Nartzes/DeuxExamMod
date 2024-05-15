@@ -14,20 +14,22 @@ namespace DeuxExamMod.Boss
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("XamLord Head");
-		}
+            DisplayName.SetDefault("XamLord Head");
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.SkeletronHead];
+        }
 
 		public override void SetDefaults()
 		{
-			NPC.CloneDefaults(NPCID.Skeleton);
-			NPC.width = 20;
-			NPC.height = 20;
-			NPC.damage = 15;
-			NPC.defense = 8;
-			NPC.lifeMax = 100;
-			NPC.value = 100f;
-			NPC.knockBackResist = 0.4f;
-		}
+            NPC.CloneDefaults(NPCID.SkeletronHead);
+            NPC.width = 20;
+            NPC.height = 20;
+            NPC.damage = 15;
+            NPC.defense = 8;
+            NPC.lifeMax = 100;
+            NPC.value = 100f;
+            NPC.knockBackResist = 0.4f;
+            NPC.boss = true;
+        }
 
 		public override void AI()
 		{
