@@ -25,7 +25,7 @@ namespace DeuxExamMod.Items.Accessories
             Item.CloneDefaults(ItemID.ZephyrFish);
             Item.buffType = Mod.Find<ModBuff>("GhostDogBuff").Type;
             Item.shoot = Mod.Find<ModProjectile>("GhostDogProj").Type;
-
+            Item.rare = ItemRarityID.Purple;
         }
 
         public override bool? UseItem(Player player)

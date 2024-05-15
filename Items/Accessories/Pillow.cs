@@ -18,6 +18,8 @@ namespace DeuxExamMod.Items.Accessories
             Item.width = 20;
             Item.height = 20;
             Item.accessory = true;
+            Item.rare = ItemRarityID.Purple;
+
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

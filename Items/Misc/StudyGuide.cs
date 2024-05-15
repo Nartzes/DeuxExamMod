@@ -29,7 +29,5 @@ namespace DeuxExamMod.Items.Misc
             recipeModded.AddTile(18);
             recipeModded.Register();
         }
-
-
     }
 }
