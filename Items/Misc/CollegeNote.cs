@@ -17,7 +17,7 @@ namespace DeuxExamMod.Items.Misc
         {
             Item.width = 16;
             Item.height = 28;
-            Item.maxStack = 3;
+            Item.maxStack = 999;
             Item.rare = ItemRarityID.Blue;
         }
     }

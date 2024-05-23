@@ -51,6 +51,7 @@ namespace DeuxExamMod.Enemies
             }
             jumpCooldown--; // Decrease cooldown
         }
+
         public override void OnKill()
         {
             // Manually spawn FeelGoodJuice

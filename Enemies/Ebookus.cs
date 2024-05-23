@@ -105,7 +105,7 @@ namespace DeuxExamMod.Enemies
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ebookus");
-            Main.npcFrameCount[NPC.type] = 8; // The image has 8 frames for the NPC's animation
+            Main.npcFrameCount[NPC.type] = 3; // The image has 8 frames for the NPC's animation
         }
 
         public override void SetDefaults()
@@ -178,7 +178,7 @@ namespace DeuxExamMod.Enemies
         private void HandleAnimation()
         {
             NPC.frameCounter++;
-            if (NPC.frameCounter > 8) // Adjust the speed of the animation by changing this value
+            if (NPC.frameCounter > 6) // Adjust the speed of the animation by changing this value
             {
                 NPC.frameCounter = 0;
                 NPC.frame.Y = (NPC.frame.Y + NPC.frame.Height) % (Main.npcFrameCount[NPC.type] * NPC.frame.Height);
