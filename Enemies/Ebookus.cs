@@ -40,8 +40,8 @@ namespace DeuxExamMod.Enemies
             NPC.value = 100f;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
-            NPC.noGravity = true;
-            NPC.noTileCollide = true;
+            NPC.noGravity = false;
+            NPC.noTileCollide = false;
         }
 
         public override void AI()
@@ -56,16 +56,15 @@ namespace DeuxExamMod.Enemies
                     NPC.position.Y = player.position.Y - 5 * 16;
                     NPC.localAI[0] = 1f; // Ensure this is only done once
                 }
-                HoverAroundPlayer(player);
+                FollowPlayerWithCollision(player);
                 ShootAtPlayer(player);
                 CustomJumpLogic(player);
             }
             HandleAnimation();
         }
 
-        private void HoverAroundPlayer(Player player)
+        private void FollowPlayerWithCollision(Player player)
         {
-            float desiredHeightAboveGround = 100f; // Hover 100 pixels above the ground
             Vector2 moveDirection = player.Center - NPC.Center;
 
             // Change direction randomly to mimic erratic behavior
@@ -80,17 +79,36 @@ namespace DeuxExamMod.Enemies
             moveDirection.Normalize();
             NPC.velocity = (NPC.velocity * 0.9f) + moveDirection * 0.5f;
 
-            // Ensure NPC stays above the ground
-            if (NPC.Bottom.Y > (float)(Main.worldSurface * 16.0) + desiredHeightAboveGround)
+            // Handle collision with tiles
+            TileCollision();
+        }
+
+        private void TileCollision()
+        {
+            Vector2 newPosition = NPC.position;
+            Vector2 velocity = NPC.velocity;
+
+            int width = NPC.width;
+            int height = NPC.height;
+
+            // Check collision with tiles and adjust position accordingly
+            bool collisionX = WorldGen.SolidTile((int)(newPosition.X / 16), (int)(newPosition.Y / 16));
+            bool collisionY = WorldGen.SolidTile((int)((newPosition.X + width) / 16), (int)(newPosition.Y / 16));
+
+            if (collisionX)
             {
-                NPC.velocity.Y -= 0.5f; // Move up if too close to the ground
+                newPosition.X -= velocity.X;
+                velocity.X = 0;
             }
 
-            // Ensure NPC does not go underground
-            if (NPC.Bottom.Y > (float)(Main.worldSurface * 16.0))
+            if (collisionY)
             {
-                NPC.position.Y = (float)(Main.worldSurface * 16.0) - NPC.height;
+                newPosition.Y -= velocity.Y;
+                velocity.Y = 0;
             }
+
+            NPC.position = newPosition;
+            NPC.velocity = velocity;
         }
 
         private void ShootAtPlayer(Player player)

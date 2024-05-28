@@ -76,6 +76,16 @@ namespace DeuxExamMod.Enemies
                 }
             }
             jumpCooldown--; // Decrease cooldown
+
+            // Continuous laser shooting logic
+            Vector2 laserDirection = direction;
+            laserDirection.Normalize();
+            Vector2 laserStartPosition = NPC.Center + new Vector2(0, -10); // Adjust this vector to set laser shooting point
+            int laserProjectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), laserStartPosition, laserDirection * 10f, ProjectileID.LaserMachinegunLaser, 20, 1f, Main.myPlayer);
+
+            // Ensure the laser projectile only damages the player
+            Main.projectile[laserProjectile].hostile = true;
+            Main.projectile[laserProjectile].friendly = false;
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
