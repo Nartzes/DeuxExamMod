@@ -25,18 +25,18 @@ namespace DeuxExamMod.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             // Passively give an 8% damage boost
-            player.GetDamage(DamageClass.Generic) += 0.08f; // Increases generic damage by 8%
+            player.GetDamage(DamageClass.Summon) += 0.08f; // Increases **Should be summon damage since there is no summon weapon added** damage by 8%
 
             // Check player's movement for HP regen rate
             if (player.velocity.X == 0 && player.velocity.Y == 0)
             {
                 // Higher regen rate when standing still
-                player.lifeRegen += 5000; // HP per minute
+                player.lifeRegen += 10; // HP per minute
             }
             else
             {
                 // Lower regen rate while moving
-                player.lifeRegen += 500; // HP per minute
+                player.lifeRegen += 5; // HP per minute
             }
         }
     }

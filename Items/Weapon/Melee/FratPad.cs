@@ -15,7 +15,7 @@ namespace DeuxExamMod.Items.Weapon.Melee
 
         public override void SetDefaults()
 		{
-			Item.damage = 290;
+			Item.damage = 60;
 			Item.DamageType = DamageClass.Melee;
 			Item.crit = 16;
 			Item.width = 40;

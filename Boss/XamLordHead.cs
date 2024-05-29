@@ -11,6 +11,7 @@ using DeuxExamMod.Items.Weapon.Range;  // Namespace for TShirtCannon
 using DeuxExamMod.Items.Weapon.Magic;  // Correct namespace for DaPong
 using DeuxExamMod.Projectiles; // Ensure this is included
 using DeuxExamMod.Buff; // Ensure this is included
+using Terraria.GameContent.ItemDropRules; // Add Tmodloader's drop rules
 
 namespace DeuxExamMod.Boss
 {
@@ -106,38 +107,56 @@ namespace DeuxExamMod.Boss
 
         public override void OnKill()
         {
-            // Manually spawn health potions and coins
-            Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.HealingPotion, 1);
+            // Manually spawn FeelGoodJuice
+            SpawnItem<FeelGoodJuice>(1);
+
+            // Manually spawn Pillow
+            SpawnItem<Pillow>(1);
+
+            // Manually spawn FratPad
+            SpawnItem<FratPad>(1);
+
+            // Manually spawn TShirtCannon
+            SpawnItem<TShirtCannon>(1);
+
+            // Manually spawn DaPong
+            SpawnItem<DaPong>(1);
+
+            // Manually spawn 3 gold coins
             Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.GoldCoin, 3);
 
-            // Possible loot items
-            ModItem[] possibleLootItems = {
-                ModContent.GetInstance<FeelGoodJuice>(),
-                ModContent.GetInstance<Pillow>(),
-                ModContent.GetInstance<FratPad>(),
-                ModContent.GetInstance<TShirtCannon>(),
-                ModContent.GetInstance<DaPong>(),
-                ModContent.GetInstance<SadSoul>()
-            };
+        //    // Manually spawn a health potion
+        //    Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.HealingPotion, 1);
 
-            // Roll 3 times for loot drops, ensuring no duplicates
-            int rolls = 3;
-            int itemsPerRoll = 2;
-            HashSet<int> droppedIndices = new HashSet<int>();
+        //    // Manually spawn SadSoul
+        //    SpawnItem<SadSoul>(1);
+        //}
 
-            for (int i = 0; i < rolls; i++)
-            {
-                for (int j = 0; j < itemsPerRoll; j++)
-                {
-                    int index;
-                    do
-                    {
-                        index = Main.rand.Next(possibleLootItems.Length);
-                    } while (droppedIndices.Contains(index));
-                    droppedIndices.Add(index);
-                    Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), possibleLootItems[index].Type);
-                }
-            }
+        //// Helper method to spawn items
+        //private void SpawnItem<T>(int amount) where T : ModItem
+        //{
+        //    int itemType = ModContent.ItemType<T>();
+        //    if (itemType > 0 && amount > 0)
+        //    {
+        //        Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), itemType, amount);
+        //    }
+        //}
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            // This is where we add item drop rules, here is a simple example:
+            //npcLoot.Add(ItemDropRule.OneFromOptions(100, ModContent.ItemType<Pillow>(),
+            //    ModContent.ItemType<SadSoul>(),
+            //    ModContent.ItemType<FeelGoodJuice>()));
+
+            //npcLoot.Add(ItemDropRule.OneFromOptions(100, ModContent.ItemType<DaPong>(),
+            //    ModContent.ItemType<FratPad>(),
+            //    ModContent.ItemType<TShirtCannon>()));
+
+            npcLoot.Add(ItemDropRule.OneFromOptions(2,
+                ModContent.ItemType<Pillow>(),
+                ModContent.ItemType<SadSoul>(),
+                ModContent.ItemType<FeelGoodJuice>()));
         }
     }
 }

@@ -13,10 +13,6 @@ namespace DeuxExamMod.Enemies
         private int jumpCooldown = 0; // Cooldown timer for jumping
         private const float FollowDistance = 200f; // Desired distance to maintain from the player
 
-        public int item1Type = ModContent.ItemType<FeelGoodJuice>();  // Changed to ModContent.ItemType<T>()
-        public int item2Type = ModContent.ItemType<CollegeNote>();    // Changed to ModContent.ItemType<T>()
-        public int item1Amount = 1;
-        public int item2Amount = 1;
 
         private int laserCooldown = 0; // Cooldown timer for laser shooting
         private const int LaserCooldownTime = 180; // 3 seconds cooldown (60 frames per second * 3 seconds)
@@ -122,17 +118,18 @@ namespace DeuxExamMod.Enemies
 
         public override void OnKill()
         {
-            // Drop FeelGoodJuice (common)
-            if (item1Type > 0 && item1Amount > 0 && Main.rand.NextFloat() < 0.75f) // 75% chance to drop
+            int itemType = ModContent.ItemType<CollegeNote>(); // Ensure you have the right namespace and class name here
+            if (Main.rand.NextFloat() < 0.30f) // 30% chance to drop
             {
-                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), item1Type, item1Amount);
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), itemType);
+            }
+            // Drop Bookmark (uncommon)
+            itemType = ModContent.ItemType<FeelGoodJuice>(); // Ensure you have the right namespace and class name here
+            if (Main.rand.NextFloat() < 0.1f) // 10% chance to drop
+            {
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), itemType);
             }
 
-            // Drop CollegeNote (uncommon)
-            if (item2Type > 0 && item2Amount > 0 && Main.rand.NextFloat() < 0.25f) // 25% chance to drop
-            {
-                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), item2Type, item2Amount);
-            }
         }
 
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

@@ -31,9 +31,9 @@ namespace DeuxExamMod.Enemies
         {
             NPC.width = 36;
             NPC.height = 36;
-            NPC.damage = 45;
+            NPC.damage = 10;
             NPC.defense = 20;
-            NPC.lifeMax = 400;
+            NPC.lifeMax = 50;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.value = 100f;

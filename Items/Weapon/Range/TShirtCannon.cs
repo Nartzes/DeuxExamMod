@@ -15,7 +15,7 @@ namespace DeuxExamMod.Items.Weapon.Range
 
         public override void SetDefaults()
         {
-            Item.damage = 280;
+            Item.damage = 240;
             Item.DamageType = DamageClass.Ranged;
             Item.crit = 6;
             Item.width = 80;
