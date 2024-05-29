@@ -22,9 +22,9 @@ namespace DeuxExamMod.Items.Accessories
 
         public override void SetDefaults()
         {
-            Item.CloneDefaults(ItemID.ZephyrFish);
-            Item.buffType = Mod.Find<ModBuff>("GhostDogBuff").Type;
-            Item.shoot = Mod.Find<ModProjectile>("GhostDogProj").Type;
+            Item.CloneDefaults(ItemID.ZephyrFish); // Basic properties of the zephyrfish summon item
+            Item.buffType = Mod.Find<ModBuff>("GhostDogBuff").Type; // Applies summon pet buff
+            Item.shoot = Mod.Find<ModProjectile>("GhostDogProj").Type; // Summon pet
             Item.rare = ItemRarityID.Purple;
         }
 

@@ -12,10 +12,6 @@ namespace DeuxExamMod.Enemies
         private Player targetPlayer;
         private int jumpCooldown = 0; // Cooldown timer for jumping
 
-        public int item1Type = ModContent.ItemType<FeelGoodJuice>();  // Changed to ModContent.ItemType<T>()
-        public int item2Type = ModContent.ItemType<CollegeNote>();    // Changed to ModContent.ItemType<T>()
-        public int item1Amount = 1;
-        public int item2Amount = 1;
 
         public override void SetStaticDefaults()
         {
@@ -27,9 +23,9 @@ namespace DeuxExamMod.Enemies
         {
             NPC.width = 100;
             NPC.height = 100;
-            NPC.damage = 30;
-            NPC.defense = 10;
-            NPC.lifeMax = 200;
+            NPC.damage = 25;
+            NPC.defense = 20;
+            NPC.lifeMax = 600;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.value = 60f;
@@ -54,17 +50,28 @@ namespace DeuxExamMod.Enemies
 
         public override void OnKill()
         {
-            // Manually spawn FeelGoodJuice
-            if (item1Type > 0 && item1Amount > 0)
+            int itemType = ModContent.ItemType<CollegeNote>(); // Ensure you have the right namespace and class name here
+            if (Main.rand.NextFloat() < 0.30f) // 30% chance to drop
             {
-                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), item1Type, item1Amount);
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), itemType);
+            }
+            // Drop Bookmark (uncommon)
+            itemType = ModContent.ItemType<FeelGoodJuice>(); // Ensure you have the right namespace and class name here
+            if (Main.rand.NextFloat() < 0.1f) // 10% chance to drop
+            {
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), itemType);
             }
 
-            // Manually spawn CollegeNote
-            if (item2Type > 0 && item2Amount > 0)
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (Main.dayTime && NPC.downedBoss3 && spawnInfo.Player.ZoneOverworldHeight)
             {
-                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), item2Type, item2Amount);
+                return 1f; // 10% chance to spawn
             }
+
+            return 0f;
         }
     }
 }

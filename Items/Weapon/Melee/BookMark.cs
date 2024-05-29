@@ -14,10 +14,10 @@ namespace DeuxExamMod.Items.Weapon.Melee
             Tooltip.SetDefault("Send the razor sharp edges into their eyes.");
         }
 
-        public override void SetDefaults()
+        public override void SetDefaults() // Meant to be stupid broken and slow attacking
         {
             Item.DamageType = DamageClass.MeleeNoSpeed;
-            Item.damage = 250;
+            Item.damage = 600;
             Item.crit = 1;
             Item.width = 20;
             Item.height = 20;

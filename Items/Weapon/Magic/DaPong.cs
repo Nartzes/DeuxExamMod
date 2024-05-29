@@ -20,7 +20,7 @@ namespace DeuxExamMod.Items.Weapon.Magic
         public override void SetDefaults()
         {
             Item.DamageType = DamageClass.Magic;
-            Item.damage = 500;
+            Item.damage = 20;
             Item.mana = 2;
             Item.crit = 6;
             Item.width = 20;
