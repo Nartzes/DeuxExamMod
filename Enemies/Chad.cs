@@ -18,6 +18,9 @@ namespace DeuxExamMod.Enemies
         public int item1Amount = 1;
         public int item2Amount = 1;
 
+        private int laserCooldown = 0; // Cooldown timer for laser shooting
+        private const int LaserCooldownTime = 180; // 3 seconds cooldown (60 frames per second * 3 seconds)
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chad");
@@ -77,15 +80,24 @@ namespace DeuxExamMod.Enemies
             }
             jumpCooldown--; // Decrease cooldown
 
-            // Continuous laser shooting logic
-            Vector2 laserDirection = direction;
-            laserDirection.Normalize();
-            Vector2 laserStartPosition = NPC.Center + new Vector2(0, -10); // Adjust this vector to set laser shooting point
-            int laserProjectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), laserStartPosition, laserDirection * 10f, ProjectileID.LaserMachinegunLaser, 20, 1f, Main.myPlayer);
+            // Laser shooting logic with cooldown
+            if (laserCooldown <= 0)
+            {
+                Vector2 laserDirection = direction;
+                laserDirection.Normalize();
+                Vector2 laserStartPosition = NPC.Center + new Vector2(0, -10); // Adjust this vector to set laser shooting point
 
-            // Ensure the laser projectile only damages the player
-            Main.projectile[laserProjectile].hostile = true;
-            Main.projectile[laserProjectile].friendly = false;
+                // Burst of three shots
+                for (int i = 0; i < 3; i++)
+                {
+                    int laserProjectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), laserStartPosition, laserDirection * 10f, ProjectileID.LaserMachinegunLaser, 20, 1f, Main.myPlayer);
+                    Main.projectile[laserProjectile].hostile = true;
+                    Main.projectile[laserProjectile].friendly = false;
+                }
+
+                laserCooldown = LaserCooldownTime; // Reset laser cooldown
+            }
+            laserCooldown--; // Decrease cooldown
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -130,3 +142,4 @@ namespace DeuxExamMod.Enemies
         }
     }
 }
+
