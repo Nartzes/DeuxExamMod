@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using DeuxExamMod.Items.Misc;  // Ensure the namespace matches where CollegeNote is defined
 using DeuxExamMod.Items.Weapon.Melee;  // Ensure the namespace matches where BookMark is defined
 using DeuxExamMod.Items.Consumeable;  // Ensure the namespace matches where FeelGoodJuice is defined
@@ -14,7 +13,6 @@ namespace DeuxExamMod.Enemies
     {
         private int shootingCooldown = 60; // Cooldown for shooting
         private int changeDirectionCooldown = 20; // Cooldown for changing direction
-        private int jumpCooldown = 0; // Cooldown timer for jumping
         private const float FollowDistance = 200f; // Desired distance to maintain from the player
 
         public int item1Type = ModContent.ItemType<FeelGoodJuice>();
@@ -40,8 +38,8 @@ namespace DeuxExamMod.Enemies
             NPC.value = 100f;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
-            NPC.noGravity = false;
-            NPC.noTileCollide = false;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
         }
 
         public override void AI()
@@ -50,65 +48,37 @@ namespace DeuxExamMod.Enemies
             Player player = Main.player[NPC.target];
             if (!player.dead && player.active)
             {
-                if (NPC.localAI[0] == 0f)
-                {
-                    // Spawn 5 spaces above the player
-                    NPC.position.Y = player.position.Y - 5 * 16;
-                    NPC.localAI[0] = 1f; // Ensure this is only done once
-                }
-                FollowPlayerWithCollision(player);
+                FollowPlayer(player);
                 ShootAtPlayer(player);
-                CustomJumpLogic(player);
             }
             HandleAnimation();
         }
 
-        private void FollowPlayerWithCollision(Player player)
+        private void FollowPlayer(Player player)
         {
             Vector2 moveDirection = player.Center - NPC.Center;
+            bool isPlayerOnGround = player.velocity.Y == 0; // Check if the player is on the ground
 
-            // Change direction randomly to mimic erratic behavior
-            changeDirectionCooldown--;
-            if (changeDirectionCooldown <= 0)
+            if (isPlayerOnGround)
             {
-                moveDirection = moveDirection.RotatedByRandom(MathHelper.ToRadians(45)); // Randomize direction within 45 degrees
-                changeDirectionCooldown = Main.rand.Next(15, 30); // Random cooldown between changes
+                // Set the NPC to follow 8 tiles above the player
+                Vector2 targetPosition = new Vector2(player.Center.X, player.Center.Y - 128); // 128 pixels = 8 tiles
+                moveDirection = targetPosition - NPC.Center;
+            }
+            else
+            {
+                // Change direction randomly to mimic erratic behavior
+                changeDirectionCooldown--;
+                if (changeDirectionCooldown <= 0)
+                {
+                    moveDirection = moveDirection.RotatedByRandom(MathHelper.ToRadians(45)); // Randomize direction within 45 degrees
+                    changeDirectionCooldown = Main.rand.Next(15, 30); // Random cooldown between changes
+                }
             }
 
             // Normalize direction vector and apply velocity
             moveDirection.Normalize();
             NPC.velocity = (NPC.velocity * 0.9f) + moveDirection * 0.5f;
-
-            // Handle collision with tiles
-            TileCollision();
-        }
-
-        private void TileCollision()
-        {
-            Vector2 newPosition = NPC.position;
-            Vector2 velocity = NPC.velocity;
-
-            int width = NPC.width;
-            int height = NPC.height;
-
-            // Check collision with tiles and adjust position accordingly
-            bool collisionX = WorldGen.SolidTile((int)(newPosition.X / 16), (int)(newPosition.Y / 16));
-            bool collisionY = WorldGen.SolidTile((int)((newPosition.X + width) / 16), (int)(newPosition.Y / 16));
-
-            if (collisionX)
-            {
-                newPosition.X -= velocity.X;
-                velocity.X = 0;
-            }
-
-            if (collisionY)
-            {
-                newPosition.Y -= velocity.Y;
-                velocity.Y = 0;
-            }
-
-            NPC.position = newPosition;
-            NPC.velocity = velocity;
         }
 
         private void ShootAtPlayer(Player player)
@@ -125,34 +95,6 @@ namespace DeuxExamMod.Enemies
 
                 shootingCooldown = 60; // Reset cooldown
             }
-        }
-
-        private void CustomJumpLogic(Player player)
-        {
-            // Custom AI code for Ebookus with goblin behaviors
-            Vector2 direction = player.Center - NPC.Center;
-            float distance = direction.Length();
-            direction.Normalize();
-
-            if (distance > FollowDistance) // Follow player if beyond follow distance
-            {
-                NPC.velocity = new Vector2(direction.X * 5f, NPC.velocity.Y); // Maintain horizontal movement only
-            }
-            else // Slow down if within follow distance
-            {
-                NPC.velocity.X *= 0.9f; // Slow down horizontal movement to maintain distance
-            }
-
-            // Add custom jumping logic with cooldown
-            if (jumpCooldown <= 0 && Main.rand.NextBool(200)) // Randomly perform a jump attack
-            {
-                if (NPC.velocity.Y == 0) // Only jump if on the ground
-                {
-                    NPC.velocity.Y = -10f; // Simulate jump
-                    jumpCooldown = 100; // Reset cooldown (approximately 1.6 seconds)
-                }
-            }
-            jumpCooldown--; // Decrease cooldown
         }
 
         private void HandleAnimation()
@@ -177,11 +119,6 @@ namespace DeuxExamMod.Enemies
                 return 1f; // 100% chance to spawn at night after Skeletron is defeated and above ground
             }
 
-            if (Main.dayTime && spawnInfo.Player.ZoneOverworldHeight) // Only spawn during the day
-            {
-                return 0.2f; // Adjusted spawn chance for goblin behavior
-            }
-
             return 0f;
         }
 
@@ -198,12 +135,6 @@ namespace DeuxExamMod.Enemies
             {
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<BookMark>());
             }
-        }
-
-        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            Texture2D texture = ModContent.Request<Texture2D>("DeuxExamMod/Content/Images/Enemies/Ebookus").Value;
-            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, drawColor, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
         }
     }
 }

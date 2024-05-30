@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using DeuxExamMod.Items.Consumeable;  // Ensure the namespace matches where FeelGoodJuice is defined
 using DeuxExamMod.Items.Misc;  // Ensure the namespace matches where CollegeNote is defined
 
@@ -12,7 +11,8 @@ namespace DeuxExamMod.Enemies
     {
         private int jumpCooldown = 0; // Cooldown timer for jumping
         private const float FollowDistance = 200f; // Desired distance to maintain from the player
-
+        private int laserCooldown = 0; // Cooldown timer for laser shooting
+        private const int LaserCooldownTime = 180; // 3 seconds cooldown (60 frames per second * 3 seconds)
 
         public override void SetStaticDefaults()
         {
@@ -26,7 +26,7 @@ namespace DeuxExamMod.Enemies
             NPC.height = 40;
             NPC.damage = 30;
             NPC.defense = 15;
-            NPC.lifeMax = 300;
+            NPC.lifeMax = 250;
             NPC.HitSound = SoundID.NPCHit2;
             NPC.DeathSound = SoundID.NPCDeath2;
             NPC.value = 100f;
@@ -73,15 +73,24 @@ namespace DeuxExamMod.Enemies
             }
             jumpCooldown--; // Decrease cooldown
 
-            // Continuous laser shooting logic
-            Vector2 laserDirection = direction;
-            laserDirection.Normalize();
-            Vector2 laserStartPosition = NPC.Center + new Vector2(0, -10); // Adjust this vector to set laser shooting point
-            int laserProjectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), laserStartPosition, laserDirection * 10f, ProjectileID.LaserMachinegunLaser, 20, 1f, Main.myPlayer);
+            // Laser shooting logic with cooldown
+            if (laserCooldown <= 0)
+            {
+                Vector2 laserDirection = direction;
+                laserDirection.Normalize();
+                Vector2 laserStartPosition = NPC.Center + new Vector2(0, -10); // Adjust this vector to set laser shooting point
 
-            // Ensure the laser projectile only damages the player
-            Main.projectile[laserProjectile].hostile = true;
-            Main.projectile[laserProjectile].friendly = false;
+                // Burst of three shots
+                for (int i = 0; i < 3; i++)
+                {
+                    int laserProjectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), laserStartPosition, laserDirection * 10f, ProjectileID.LaserMachinegunLaser, 20, 1f, Main.myPlayer);
+                    Main.projectile[laserProjectile].hostile = true;
+                    Main.projectile[laserProjectile].friendly = false;
+                }
+
+                laserCooldown = LaserCooldownTime; // Reset laser cooldown
+            }
+            laserCooldown--; // Decrease cooldown
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -111,19 +120,12 @@ namespace DeuxExamMod.Enemies
             {
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), itemType);
             }
-            // Drop Bookmark (uncommon)
+            // Drop FeelGoodJuice (uncommon)
             itemType = ModContent.ItemType<FeelGoodJuice>(); // Ensure you have the right namespace and class name here
             if (Main.rand.NextFloat() < 0.1f) // 10% chance to drop
             {
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), itemType);
             }
-
-        }
-
-        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            Texture2D texture = ModContent.Request<Texture2D>("DeuxExamMod/Content/Images/Enemies/Chad").Value;
-            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, null, drawColor, NPC.rotation, texture.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
         }
     }
 }
