@@ -10,7 +10,7 @@ namespace DeuxExamMod.Items.Accessories
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pillow");
-            Tooltip.SetDefault("You look sleepy, I can fix that...");
+            Tooltip.SetDefault("Increase summon damage 8%\nIncrease regen\nStronger regen when standing still\n''You look sleepy, I can fix that... ;)''");
         }
 
         public override void SetDefaults()

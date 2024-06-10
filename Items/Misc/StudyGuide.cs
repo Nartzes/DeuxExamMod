@@ -10,7 +10,7 @@ namespace DeuxExamMod.Items.Misc // Updated namespace to reflect correct folder
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Study Guide");
-            Tooltip.SetDefault("Summons XamLord Head");
+            Tooltip.SetDefault("Summons XamLord");
         }
 
         public override void SetDefaults()
